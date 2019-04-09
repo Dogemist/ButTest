@@ -1,0 +1,45 @@
+import * as Joi from 'joi';
+import { Middleware } from '../utils/Router';
+import { FieldValidationError } from '../errors';
+import { ValidationErrorItem } from './ValidationErrorItem';
+
+export interface RequestSchema {
+  body?: {
+    [key: string]: Joi.SchemaLike;
+  };
+  queryString?: {
+    [key: string]: Joi.SchemaLike;
+  };
+  params?: {
+    [key: string]: Joi.SchemaLike;
+  };
+}
+
+export function validateRequest(schema: RequestSchema): Middleware {
+  return async (ctx, next) => {
+    const { request } = ctx;
+    const abstractedContext = {
+      body: request.body,
+      params: ctx.params,
+      queryString: request.querystring,
+    };
+
+    const valResult = Joi.validate(abstractedContext, schema, {
+      abortEarly: true,
+      allowUnknown: false,
+    });
+
+    if (valResult.error) {
+      const { message, details } = valResult.error;
+      const fieldErrors: ValidationErrorItem[] = details.map(f => ({
+        message: f.message,
+        path: f.path,
+        type: f.type,
+      }));
+
+      throw new FieldValidationError(message, fieldErrors);
+    }
+
+    await next();
+  };
+}
