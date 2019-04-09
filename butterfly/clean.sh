@@ -1,6 +1,6 @@
 #/bin/bash
 
-docker run -it --rm \
+docker run --rm \
   -v /${PWD}:/butterfly \
   -v /${HOME}/.m2:/root/.m2 \
   -w //butterfly \
