@@ -6,17 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="avro-schemas" />
         <module name="config" />
         <module name="consumer" />
+        <module name="controller" />
+        <module name="email-consumer" />
+        <module name="event-processor" />
         <module name="gitlab-producer" />
+        <module name="json-converter" />
         <module name="middleware-dispatcher" />
         <module name="producer" />
         <module name="redmine-producer" />
         <module name="sonarqube-producer" />
+        <module name="telegram-consumer" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="telegram-consumer-old" target="1.11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

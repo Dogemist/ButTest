@@ -1,16 +1,20 @@
-import * as path from 'path';
 import { getSQLFile } from '../../../utils/getSQLFile';
+import { UserQueryProvider } from '../UserQueryProvider';
 
-export = {
+const dirName = __dirname;
+
+const queryProvider: UserQueryProvider = {
+  // list: sql('./list.sql'),
   create: sql('./create.sql'),
   delete: sql('./delete.sql'),
+  find: sql('find.sql'),
   findByEmail: sql('./findByEmail.sql'),
-  findById: sql('./findById.sql'),
-  list: sql('./list.sql'),
+  findOne: sql('./findByOne.sql'),
   update: sql('./update.sql'),
 };
 
+export default queryProvider;
+
 function sql(relativeFilename: string) {
-  const fullPath = path.join(__dirname, relativeFilename);
-  return getSQLFile(fullPath);
+  return getSQLFile(dirName, relativeFilename);
 }

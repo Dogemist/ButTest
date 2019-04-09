@@ -1,25 +1,18 @@
-import { Router } from '../../utils/Router';
-import HealthManager from './HealthManager';
-import * as HttpStatus from 'http-status-codes';
+import { Router } from '../../router/Router';
+import { HealthRepository } from './repository';
+import { RoutesInjectionParams } from '../../routes/RoutesInjectionParams';
+import { HealthManager } from './manager';
+import { HealthController } from './controller';
 
-export const getHealthRouter = () => {
-  const HealthRouter = new Router('/health');
-  const healthManager = new HealthManager();
+export const getHealthRouter = (routesParams: RoutesInjectionParams) => {
+  const healthRouter = new Router('/health');
+  const healthRepository = new HealthRepository(routesParams.metricsProvider);
+  const healthManager = new HealthManager(healthRepository);
+  const healthController = new HealthController(routesParams.routeContextReplierFactory, healthManager);
 
-  HealthRouter
-    .get('/', async ctx => {
-      ctx.body = {};
-      ctx.status = HttpStatus.NO_CONTENT;
-    });
+  healthRouter
+    .get('/', healthController.getIsAlive())
+    .get('/metrics', healthController.getMetrics());
 
-  HealthRouter
-    .get('/metrics', async ctx => {
-      const data = healthManager.metrics();
-      ctx.body = {
-        data,
-      };
-      ctx.status = HttpStatus.OK;
-    });
-
-  return HealthRouter;
+  return healthRouter;
 };

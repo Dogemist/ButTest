@@ -2,13 +2,13 @@ WITH EVENT_RECORD AS (
     SELECT NOW() AS timestamp,
 	    public.producer_service ${service} AS service,
 	    ${projectName} AS project_name,
-        ${projectUrl} AS project_url,
+        ${projectURL} AS project_url,
 	    ${eventId} AS event_id,
 	    public.service_event_type ${eventType} AS event_type,
         ${userEmail} AS user_email,
         ${title} AS title,
         ${description} AS description,
-        ${tags} AS tags
+        ${tags}::text[] AS tags
 ),
 USERS_WITH_SIMILAR_PROJECT_NAME AS (
 	SELECT uwp.*
@@ -104,23 +104,23 @@ BEST_MATCH_SEARCH_RANK AS (
 	FROM BEST_MATCH_SEARCH
 	ORDER BY rank
 ),
-CONTACT_INFO_JSON_LIST_BY_USER_ID AS (
+CONTACT_INFO_JSON_MAP_BY_USER_ID AS (
 	SELECT m.user_id,
-		array_agg(
-			json_build_object(
+			jsonb_object_agg(
 				xuc.contact_type, xuc.contact_ref
-			)
-		)
-	AS contact_info
+			) AS contact_info
 	FROM BEST_MATCH_SEARCH_RANK m
 	JOIN public.x_user_contact xuc
 		ON xuc.user_id = m.user_id
 	GROUP BY m.user_id
 ),
 USER_CONTACTS_INFO AS (
-	SELECT u.*,
+	SELECT u.user_id,
+		u.email,
+		u.firstname,
+		u.lastname,
 		c.contact_info
-	FROM CONTACT_INFO_JSON_LIST_BY_USER_ID c
+	FROM CONTACT_INFO_JSON_MAP_BY_USER_ID c
 	JOIN v_filtered_users u
 		ON u.user_id = c.user_id
 )
@@ -136,6 +136,9 @@ SELECT r.timestamp,
 	user_contacts
 FROM EVENT_RECORD r
 JOIN (
-	SELECT array_agg(row_to_json(u.*)) AS user_contacts
+	SELECT COALESCE(
+		array_agg(row_to_json(u.*)),
+		array[]::json[]
+	) AS user_contacts
 	FROM USER_CONTACTS_INFO u
 ) t(user_contacts) ON TRUE

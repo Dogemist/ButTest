@@ -1,11 +1,6 @@
-import { ErrorParams } from './errorCodeMap';
+import { ErrorToJSON, ErrorParams } from '../common/errors';
 
-export interface ErrorToJSON {
-  code: ErrorParams['code'];
-  message: ErrorParams['message'];
-}
-
-export class AppError extends Error {
+export abstract class AppError extends Error {
   readonly errorKey: ErrorParams['errorKey'];
   readonly code: ErrorParams['code'];
   readonly error?: ErrorParams['error'];
@@ -20,6 +15,7 @@ export class AppError extends Error {
   toJSON(): ErrorToJSON {
     return {
       code: this.code,
+      error: true,
       message: this.message,
     };
   }

@@ -1,4 +1,4 @@
-version: '3.3'
+version: '3.5'
 
 services:
   pgadmin:
@@ -15,6 +15,8 @@ services:
       PGADMIN_DEFAULT_PASSWORD: "secret"
     depends_on:
       - postgres
+    networks:
+      - user-manager-network
 
   postgres:
     image: "postgres:11-alpine"
@@ -22,25 +24,39 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - ./user-manager-database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      # for the production database, no demo data should be inserted
+      - ./user-manager-database/sql/ddl.sql:/docker-entrypoint-initdb.d/ddl.sql
       - pg_data:/var/lib/postgresql/data/
     environment:
       POSTGRES_PASSWORD: "butterfly_user"
       POSTGRES_USER: "butterfly_user"
       POSTGRES_DB: "butterfly"
-    # network_mode: bridge
+    networks:
+      - user-manager-network
 
   user-manager:
     build:
       context: ./user-manager-rest-api
     restart: always
     ports:
-      - "5000:3000"
+      - "5000:5000"
     links:
       - postgres
     depends_on:
       - postgres
     env_file: ./user-manager-rest-api/.user-manager-rest-api.env
+    environment:
+      NODE_ENV: "production"
+    networks:
+      - user-manager-network
+      # - middleware-dispatcher-network
 
 volumes:
   pg_data:
+
+networks:
+  user-manager-network:
+    name: user-manager-network
+  # middleware-dispatcher-network:
+  #   external:
+  #     name: middleware-dispatcher-network

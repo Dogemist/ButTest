@@ -3,25 +3,46 @@
 Here's a list of tools you should have installed on your PC:
 
 - docker 18.09.*
-- docker-compose 1.23.*
+- docker-compose 1.24.*
 
 # Conventions
 
 - Each declared command is meant to be run from the current directory
 
+# TL/DR How to run everything
+
+You'll need multiple terminals open.
+How to run the entire system:
+
+> Bash terminal 1: compiles the Java modules into executable jars with embedded dependencies in a Docker process.
+- $ `cd butterfly`
+- $ `./build.sh`
+
+> Bash terminal 2: launches the Java services and creates docker-compose's virtual networks.
+- $ `docker-compose up --build`
+
+> Bash terminal 2: launches a new Gitlab instance (may require some minutes).
+- $ `cd third-party-services`
+- $ `./gitlab.sh start`
+
+> Bash terminal 3: launches the User Manager subsystem (both the Postgres database with its initial data and the NodeJS REST APIs, which are transpiled from TypeScript to JavaScript in a Docker process)
+- $ `cd user-manager`
+- $ `docker-compose up --build`
+
+-------------------------------------------------------------------------------------------
+
 # How to run Kafka and the Java Producers
 
 **This requires that you build the Java projects first.**
 
-$ `cd butterfly``
-$ `./clean.sh`
+$ `cd butterfly`
 $ `./build.sh`
 
 <details>
-  <summary>The `clean` script should return a log similar to the following:</summary>
+  <summary>The `build` script should return a log similar to the following:</summary>
 
-  <code>
-$ ./clean.sh
+<code>
+$ ./build.sh
 [INFO] Scanning for projects...
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Build Order:
@@ -99,14 +120,6 @@ $ ./clean.sh
 [INFO] Total time:  0.696 s
 [INFO] Finished at: 2019-02-23T08:33:28Z
 [INFO] ------------------------------------------------------------------------
-</code>
-</details>
-
-<details>
-  <summary>The `build` script should return a log similar to the following:</summary>
-
-<code>
-$ ./build.sh
 [INFO] Scanning for projects...
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Build Order:
@@ -481,22 +494,38 @@ $ `docker-compose ps`
 
 ## Kafka
 
-Right now there's a single Kafka node, which runs on port `9092`
+Right now there's a single Kafka node, which is accessible by another Docker service on port `9092`, and by the host machine on port `29092`.
 
 ## Zookeeper
 
-Right now there's a single Kafka node, which runs on port `2181`
+Right now there's a single Zookeeper node, which runs on port `2181` for both Docker services and the host machine.
 
 ## Kafka Schema Registry
 
-Right now there's a single Kafka Schema Registry, which runs on port `8081`.
+Right now there's a single Kafka Schema Registry, which runs on port `8081` for both Docker services and the host machine.
 
 ## Gitlab Producer
 
 Right now it's the only alpha-ready Producer app available.
 It exposes the TCP port `3000` and accepts Gitlab Webhooks at `HTTP POST localhost:3000/webhooks/gitlab`.
-
 It reads its configuration at boot time from its environment variables, which are defined in [./butterfly/gitlab-producer/.gitlab-producer.env](./tree/master/butterfly/gitlab-producer/.gitlab-producer.env).
+
+## Middleware Dispatcher
+
+It reads messages from `service-gitlab`, `service-sonarqube`, `service-redmine`, asks the `user-manager` for a list of users that should
+receive the event described by these messages, and publishes a new message for each contact that each user in the list has defined.
+It can write to `contact-telegram`, `contact-slack`, and `contact-email` topics.
+It reads its configuration at boot time from its environment variables, which are defined in [./butterfly/middleware-dispatcher/.middleware-dispatcher.env](./tree/master/butterfly/middleware-dispatcher/.middleware-dispatcher.env).
+
+## Telegram Consumer
+
+Consumer that reads messages from the `contact-telegram` topic.
+It reads its configuration at boot time from its environment variables, which are defined in [./butterfly/telegram-consumer/.telegram-consumer.env](./tree/master/butterfly/telegram-consumer/.telegram-consumer.env).
+
+## Email Consumer
+
+Consumer that reads messages from the `contact-email` topic.
+It reads its configuration at boot time from its environment variables, which are defined in [./butterfly/email-consumer/.email-consumer.env](./tree/master/butterfly/email-consumer/.email-consumer.env).
 
 # How to run third party services
 
@@ -529,7 +558,7 @@ This is a useful tool to inspect Redmine responses. Add a webhook to a Redmine p
 - Reset: `./gitlab.sh reset`
 - Logs: `./gitlab.sh logs`
 
-After some seconds, open [http://localhost:15001](http://localhost:15001) and insert the following credentials:
+After some seconds, open [https://localhost:10443](http://localhost:10443) and insert the following credentials:
 
 - username: **butterfly**
 - password: **butterfly**

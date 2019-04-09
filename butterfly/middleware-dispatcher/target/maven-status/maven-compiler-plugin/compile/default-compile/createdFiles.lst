@@ -1,2 +1,8 @@
+it/unipd/dstack/butterfly/middleware/dispatcher/model/UserManagerResponse.class
+it/unipd/dstack/butterfly/middleware/dispatcher/utils/Utils.class
 it/unipd/dstack/butterfly/middleware/dispatcher/MiddlewareDispatcherController.class
+it/unipd/dstack/butterfly/middleware/dispatcher/model/User.class
+it/unipd/dstack/butterfly/middleware/dispatcher/model/UserManagerResponseData.class
 it/unipd/dstack/butterfly/middleware/dispatcher/Main.class
+it/unipd/dstack/butterfly/middleware/dispatcher/model/UserSingleContact.class
+it/unipd/dstack/butterfly/middleware/dispatcher/model/UserContact.class

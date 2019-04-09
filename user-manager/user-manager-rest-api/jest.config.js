@@ -1,4 +1,5 @@
 module.exports = {
+  // rootDir: `${__dirname}`,
   preset: 'ts-jest',
   testEnvironment: 'node',
   moduleNameMapper: {
@@ -7,5 +8,5 @@ module.exports = {
   testMatch: [
 		'<rootDir>/test/**/*.spec.(ts|js)'
   ],
-  setupTestFrameworkScriptFile: '<rootDir>/test/init.ts',
+  setupFilesAfterEnv: ['<rootDir>/test/init.ts'],
 };

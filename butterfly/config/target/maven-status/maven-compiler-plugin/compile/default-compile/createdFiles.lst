@@ -1,7 +1,5 @@
-it/unipd/dstack/butterfly/config/exception/ConfigurationCastException.class
-it/unipd/dstack/butterfly/config/EnvironmentConfigManager.class
-it/unipd/dstack/butterfly/config/KafkaPropertiesFactory.class
-it/unipd/dstack/butterfly/config/ConfigManager.class
 it/unipd/dstack/butterfly/config/AbstractConfigManager.class
 it/unipd/dstack/butterfly/config/exception/ConfigurationException.class
 it/unipd/dstack/butterfly/config/exception/ConfigurationUndefinedException.class
+it/unipd/dstack/butterfly/config/exception/ConfigurationCastException.class
+it/unipd/dstack/butterfly/config/EnvironmentConfigManager.class

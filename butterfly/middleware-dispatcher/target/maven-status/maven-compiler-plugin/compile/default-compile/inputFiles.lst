@@ -1,2 +1,8 @@
-/home/enrico/butTest/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/MiddlewareDispatcherController.java
-/home/enrico/butTest/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/Main.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/model/User.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/model/UserManagerResponse.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/MiddlewareDispatcherController.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/model/UserContact.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/Main.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/utils/Utils.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/model/UserSingleContact.java
+/butterfly/middleware-dispatcher/src/main/java/it/unipd/dstack/butterfly/middleware/dispatcher/model/UserManagerResponseData.java

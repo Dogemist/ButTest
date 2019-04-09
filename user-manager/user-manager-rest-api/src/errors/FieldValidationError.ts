@@ -1,11 +1,14 @@
-import { AppError, ErrorToJSON } from './AppError';
-import { ErrorType } from './errorCodeMap';
+import { AppError } from './AppError';
+import { ErrorType, ErrorToJSON } from '../common/errors';
 import { ValidationErrorItem } from '../middlewares/ValidationErrorItem';
 
 export interface FieldValidationErrorToJSON extends ErrorToJSON {
   fields: ValidationErrorItem[];
 }
 
+/**
+ * Error thrown when the HTTP request body doesn't respect the expected contract.
+ */
 export class FieldValidationError extends AppError {
   private fields: ValidationErrorItem[];
 

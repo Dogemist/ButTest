@@ -3,7 +3,6 @@ it/unipd/dstack/butterfly/consumer/consumer/message/MessageSender.class
 it/unipd/dstack/butterfly/consumer/consumer/formatstrategy/FormatStrategy.class
 it/unipd/dstack/butterfly/consumer/consumer/Subject.class
 it/unipd/dstack/butterfly/consumer/utils/EmailValidator.class
-it/unipd/dstack/butterfly/consumer/App.class
 it/unipd/dstack/butterfly/consumer/consumer/KafkaConsumerProperties.class
 it/unipd/dstack/butterfly/consumer/consumer/Observer.class
 it/unipd/dstack/butterfly/consumer/consumer/AbstractSubject.class

@@ -33,7 +33,6 @@ EOF
 ;;
   *)
     echo "Error.";
-    $0 --help;
     exit 1
     ;;
 esac

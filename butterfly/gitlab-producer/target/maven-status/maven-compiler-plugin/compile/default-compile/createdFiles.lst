@@ -1,0 +1,7 @@
+it/unipd/dstack/butterfly/producer/gitlab/Main.class
+it/unipd/dstack/butterfly/producer/gitlab/webhookmanager/GitlabWebhookException.class
+it/unipd/dstack/butterfly/producer/gitlab/webhookmanager/GitlabWebhookListenerAggregator.class
+it/unipd/dstack/butterfly/producer/gitlab/webhookmanager/GitlabWebhookManager.class
+it/unipd/dstack/butterfly/producer/gitlab/webhookmanager/GitlabWebhookListener.class
+it/unipd/dstack/butterfly/producer/gitlab/webhookmanager/GitlabWebhookListenerObserver.class
+it/unipd/dstack/butterfly/producer/gitlab/GitlabProducerController.class

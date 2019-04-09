@@ -1,7 +1,5 @@
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationException.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/EnvironmentConfigManager.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationCastException.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/KafkaPropertiesFactory.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/ConfigManager.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/AbstractConfigManager.java
-/home/enrico/butTest/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationUndefinedException.java
+/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/AbstractConfigManager.java
+/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationCastException.java
+/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationUndefinedException.java
+/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/exception/ConfigurationException.java
+/butterfly/config/src/main/java/it/unipd/dstack/butterfly/config/EnvironmentConfigManager.java
