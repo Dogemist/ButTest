@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>KafkaConsumerProperties.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">consumer</a> &gt; <a href="index.source.html" class="el_package">it.unipd.dstack.butterfly.consumer.consumer</a> &gt; <span class="el_source">KafkaConsumerProperties.java</span></div><h1>KafkaConsumerProperties.java</h1><pre class="source lang-java linenums">package it.unipd.dstack.butterfly.consumer.consumer;
+
+import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
+import it.unipd.dstack.butterfly.config.AbstractConfigManager;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
+
+import java.util.Properties;
+
+import static io.confluent.kafka.serializers.KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG;
+
+class KafkaConsumerProperties {
+    private KafkaConsumerProperties() {}
+
+    static Properties defaultKafkaConsumerPropertiesFactory(AbstractConfigManager configManager) {
+<span class="nc" id="L18">        Properties props = new Properties();</span>
+
+        // A list of URLs to use for establishing the initial connection to the cluster.
+<span class="nc" id="L21">        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,</span>
+<span class="nc" id="L22">                configManager.getStringProperty(&quot;KAFKA_BOOTSTRAP_SERVERS_CONFIG&quot;));</span>
+
+<span class="nc" id="L24">        props.put(ConsumerConfig.GROUP_ID_CONFIG,</span>
+<span class="nc" id="L25">                configManager.getStringProperty(&quot;KAFKA_GROUP_ID_CONFIG&quot;));</span>
+
+<span class="nc" id="L27">        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG,</span>
+<span class="nc" id="L28">                configManager.getStringProperty(&quot;KAFKA_AUTO_OFFSET_RESET_CONFIG&quot;, &quot;earliest&quot;));</span>
+
+<span class="nc" id="L30">        props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG,</span>
+<span class="nc" id="L31">                configManager.getBooleanProperty(&quot;KAFKA_ENABLE_AUTO_COMMIT_CONFIG&quot;, false));</span>
+
+<span class="nc" id="L33">        props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG,</span>
+<span class="nc" id="L34">                configManager.getIntProperty(&quot;KAFKA_MAX_POLL_RECORDS_CONFIG&quot;, 10));</span>
+
+        // Deserializer class for key that implements the
+        // org.apache.kafka.common.serialization.Deserializer interface.
+<span class="nc" id="L38">        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG,</span>
+<span class="nc" id="L39">                StringDeserializer.class.getName());</span>
+
+        // Deserializer class for value that implements the
+        // org.apache.kafka.common.serialization.Deserializer interface.
+<span class="nc" id="L43">        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,</span>
+<span class="nc" id="L44">                KafkaAvroDeserializer.class.getName());</span>
+
+<span class="nc" id="L46">        props.put(SPECIFIC_AVRO_READER_CONFIG, &quot;true&quot;);</span>
+
+<span class="nc" id="L48">        props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG,</span>
+<span class="nc" id="L49">                configManager.getStringProperty(&quot;AVRO_SCHEMA_REGISTRY_URL&quot;));</span>
+
+<span class="nc" id="L51">        return props;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

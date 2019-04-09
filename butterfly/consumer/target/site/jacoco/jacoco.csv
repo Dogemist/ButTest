@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+consumer,it.unipd.dstack.butterfly.consumer.consumer.message,Message,15,0,0,0,6,0,3,0,3,0
+consumer,it.unipd.dstack.butterfly.consumer.consumer.controller,ConsumerController,77,0,0,0,24,0,7,0,7,0
+consumer,it.unipd.dstack.butterfly.consumer,App,7,0,0,0,3,0,2,0,2,0
+consumer,it.unipd.dstack.butterfly.consumer.consumer,ConsumerImplFactory,13,0,0,0,4,0,2,0,2,0
+consumer,it.unipd.dstack.butterfly.consumer.consumer,ConsumerImpl,85,0,2,0,25,0,8,0,7,0
+consumer,it.unipd.dstack.butterfly.consumer.consumer,KafkaConsumerProperties,70,0,0,0,19,0,1,0,1,0
+consumer,it.unipd.dstack.butterfly.consumer.consumer,AbstractSubject,28,0,0,0,8,0,5,0,5,0
+consumer,it.unipd.dstack.butterfly.consumer.utils,ConsumerUtils,0,52,0,0,0,9,0,5,0,5
+consumer,it.unipd.dstack.butterfly.consumer.utils,EmailValidator,0,6,0,0,0,2,0,1,0,1

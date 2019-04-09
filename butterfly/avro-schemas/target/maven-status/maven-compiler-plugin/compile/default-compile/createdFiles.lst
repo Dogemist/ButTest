@@ -1,0 +1,11 @@
+it/unipd/dstack/butterfly/consumer/avro/EmailWithContactRef$Builder.class
+it/unipd/dstack/butterfly/consumer/avro/Contacts.class
+it/unipd/dstack/butterfly/consumer/avro/EmailWithContactRef.class
+it/unipd/dstack/butterfly/producer/avro/Event$Builder.class
+it/unipd/dstack/butterfly/producer/avro/Services.class
+it/unipd/dstack/butterfly/producer/avro/Event.class
+it/unipd/dstack/butterfly/consumer/avro/UserSingleContact.class
+it/unipd/dstack/butterfly/consumer/avro/EventWithUserContact.class
+it/unipd/dstack/butterfly/consumer/avro/UserSingleContact$Builder.class
+it/unipd/dstack/butterfly/consumer/avro/EventWithUserContact$Builder.class
+it/unipd/dstack/butterfly/producer/avro/ServiceEventTypes.class

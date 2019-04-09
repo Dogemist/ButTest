@@ -1,0 +1,4 @@
+it/unipd/dstack/butterfly/consumer/utils/EnumTesting.class
+it/unipd/dstack/butterfly/consumer/utils/EmailValidatorTest.class
+it/unipd/dstack/butterfly/consumer/utils/ConsumerUtilsTest.class
+it/unipd/dstack/butterfly/consumer/consumer/KafkaConsumerPropertiesTest.class

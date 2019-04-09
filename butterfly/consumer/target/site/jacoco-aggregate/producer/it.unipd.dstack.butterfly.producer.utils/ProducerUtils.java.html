@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../jacoco-resources/report.gif" type="image/gif"/><title>ProducerUtils.java</title><link rel="stylesheet" href="../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../index.html" class="el_report">JaCoCo</a> &gt; <a href="../index.html" class="el_bundle">producer</a> &gt; <a href="index.source.html" class="el_package">it.unipd.dstack.butterfly.producer.utils</a> &gt; <span class="el_source">ProducerUtils.java</span></div><h1>ProducerUtils.java</h1><pre class="source lang-java linenums">package it.unipd.dstack.butterfly.producer.utils;
+
+import org.apache.kafka.clients.producer.Callback;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
+<span class="nc" id="L9">public class ProducerUtils {</span>
+    public static &lt;T&gt; CompletableFuture&lt;Void&gt; composeFutureList(List&lt;CompletableFuture&lt;T&gt;&gt; completableFutureList) {
+<span class="nc" id="L11">        CompletableFuture&lt;T&gt;[] completableFutureArray =</span>
+<span class="nc" id="L12">                new CompletableFuture[completableFutureList.size()];</span>
+<span class="nc" id="L13">        completableFutureArray = completableFutureList.toArray(completableFutureArray);</span>
+<span class="nc" id="L14">        return CompletableFuture.allOf(completableFutureArray);</span>
+    }
+
+    public static CompletableFuture&lt;Void&gt; getCompletableFuture(Consumer&lt;Callback&gt; supplier) {
+<span class="nc" id="L18">        CompletableFuture&lt;Void&gt; completableFuture = new CompletableFuture&lt;&gt;();</span>
+<span class="nc" id="L19">        Callback callback = (recordMetadata, exception) -&gt; {</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">            if (exception == null) {</span>
+<span class="nc" id="L21">                completableFuture.complete(null);</span>
+            } else {
+<span class="nc" id="L23">                completableFuture.completeExceptionally(exception);</span>
+            }
+<span class="nc" id="L25">        };</span>
+
+<span class="nc" id="L27">        supplier.accept(callback);</span>
+<span class="nc" id="L28">        return completableFuture;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>Code Coverage Report for JaCoCo 1.0-SNAPSHOT</div></body></html>

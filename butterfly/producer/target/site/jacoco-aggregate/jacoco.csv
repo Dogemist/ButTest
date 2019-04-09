@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+JaCoCo/config,it.unipd.dstack.butterfly.config,EnvironmentConfigManager,0,6,0,0,0,3,0,2,0,2
+JaCoCo/config,it.unipd.dstack.butterfly.config,ConfigManager,55,0,0,0,12,0,11,0,11,0
+JaCoCo/config,it.unipd.dstack.butterfly.config,KafkaPropertiesFactory,94,0,0,0,27,0,2,0,2,0
+JaCoCo/config,it.unipd.dstack.butterfly.config,AbstractConfigManager,51,41,3,1,11,11,8,6,6,6
+JaCoCo/config,it.unipd.dstack.butterfly.config.exception,ConfigurationCastException,24,0,0,0,3,0,2,0,2,0
+JaCoCo/config,it.unipd.dstack.butterfly.config.exception,ConfigurationUndefinedException,14,0,0,0,3,0,2,0,2,0
+JaCoCo/config,it.unipd.dstack.butterfly.config.exception,ConfigurationException,4,0,0,0,2,0,1,0,1,0
+JaCoCo/controller,it.unipd.dstack.butterfly.controller,Controller,10,0,0,0,4,0,1,0,1,0
+JaCoCo/controller,it.unipd.dstack.butterfly.controller.record,Record,0,15,0,0,0,6,0,3,0,3

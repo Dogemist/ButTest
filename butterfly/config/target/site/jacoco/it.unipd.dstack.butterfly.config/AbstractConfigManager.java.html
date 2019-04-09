@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractConfigManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">config</a> &gt; <a href="index.source.html" class="el_package">it.unipd.dstack.butterfly.config</a> &gt; <span class="el_source">AbstractConfigManager.java</span></div><h1>AbstractConfigManager.java</h1><pre class="source lang-java linenums">package it.unipd.dstack.butterfly.config;
+
+import it.unipd.dstack.butterfly.config.exception.ConfigurationCastException;
+import it.unipd.dstack.butterfly.config.exception.ConfigurationException;
+import it.unipd.dstack.butterfly.config.exception.ConfigurationUndefinedException;
+
+import java.util.Optional;
+import java.util.function.Function;
+
+/**
+ * AbstractConfigManager is an abstract class that defines the contract for reading configuration properties,
+ * setting default values and explicitly cast them to the following types:
+ * - String;
+ * - Integer;
+ * - Boolean;
+ * It implements the Template Pattern via the readConfigValue method.
+ * In case of errors, an instance of &lt;code&gt;ConfigurationException&lt;/code&gt; is thrown.
+ */
+<span class="fc" id="L19">public abstract class AbstractConfigManager {</span>
+    /**
+     * Reads a value from a configuration resource.
+     * @param property
+     * @return the configuration value corresponding to the given property.
+     */
+    protected abstract String readConfigValue(String property);
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt;.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set, an instance of
+     * &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     *
+     * @param property the configuration property name
+     * @return the value of the specified configuration variable.
+     */
+    public final String getStringProperty(String property) throws ConfigurationUndefinedException {
+<span class="fc" id="L36">        return this.getStringProperty(property, null);</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt;, or the value specified by
+     * &lt;code&gt;defaultProperty&lt;/code&gt; if &lt;code&gt;property&lt;/code&gt; isn't set.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set and defaultProperty is null,
+     * an instance of &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     *
+     * @param property
+     * @param defaultProperty
+     * @return the value of the specified configuration variable, or defaultProperty if it isn't set.
+     */
+    public final String getStringProperty(String property, String defaultProperty) throws ConfigurationUndefinedException {
+<span class="fc" id="L50">        return this</span>
+<span class="fc" id="L51">                .getConfigValue(property, defaultProperty, AbstractConfigManager.stringToStringMapper, String.class);</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt; casted to Boolean.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set, an instance of
+     * &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     * If the value of &lt;code&gt;property&lt;/code&gt; cannot be casted to Boolean, an instance of
+     * &lt;code&gt;ConfigurationCastException&lt;/code&gt; is thrown.
+     *
+     * @param property the configuration property name
+     * @return the value of the specified configuration variable.
+     */
+    public final Boolean getBooleanProperty(String property) throws ConfigurationException {
+<span class="nc" id="L65">        return this.getBooleanProperty(property, null);</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt; casted to Boolean, or the
+     * value specified by &lt;code&gt;defaultProperty&lt;/code&gt; if &lt;code&gt;property&lt;/code&gt; isn't set.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set and defaultProperty is null,
+     * an instance of &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     * If the value of &lt;code&gt;property&lt;/code&gt; cannot be casted to Boolean, an instance of
+     * &lt;code&gt;ConfigurationCastException&lt;/code&gt; is thrown.
+     *
+     * @param property
+     * @param defaultProperty
+     * @return the value of the specified configuration variable, or defaultProperty if it isn't set.
+     */
+    public final Boolean getBooleanProperty(String property, Boolean defaultProperty) throws ConfigurationException {
+<span class="nc" id="L81">        return this</span>
+<span class="nc" id="L82">                .getConfigValue(property, defaultProperty, AbstractConfigManager.stringToBooleanMapper, Boolean.class);</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt; casted to Integer.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set, an instance of
+     * &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     * If the value of &lt;code&gt;property&lt;/code&gt; cannot be casted to Integer, an instance of
+     * &lt;code&gt;ConfigurationCastException&lt;/code&gt; is thrown.
+     *
+     * @param property the configuration property name
+     * @return the value of the specified configuration variable.
+     */
+    public final Integer getIntProperty(String property) throws ConfigurationException {
+<span class="nc" id="L96">        return this.getIntProperty(property, null);</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt; casted to Integer, or the
+     * value specified by &lt;code&gt;defaultProperty&lt;/code&gt; if &lt;code&gt;property&lt;/code&gt; isn't set.
+     * If the configuration variable identified by &lt;code&gt;property&lt;/code&gt; isn't set and defaultProperty is null,
+     * an instance of &lt;code&gt;ConfigurationUndefinedException&lt;/code&gt; is thrown.
+     * If the value of &lt;code&gt;property&lt;/code&gt; cannot be casted to Integer, an instance of
+     * &lt;code&gt;ConfigurationCastException&lt;/code&gt; is thrown.
+     *
+     * @param property
+     * @param defaultProperty
+     * @return the value of the specified configuration variable, or defaultProperty if it isn't set.
+     */
+    public final Integer getIntProperty(String property, Integer defaultProperty) throws ConfigurationException {
+<span class="nc" id="L112">        return this</span>
+<span class="nc" id="L113">                .getConfigValue(property, defaultProperty, AbstractConfigManager.stringToIntegerMapper, Integer.class);</span>
+    }
+
+    /**
+     * Retrieves the value of the configuration identified by &lt;code&gt;property&lt;/code&gt; wrapped in an Optional object.
+     *
+     * @param property the configuration property name
+     * @return the optional configuration value
+     */
+    private Optional&lt;String&gt; getOptionalConfigValue(String property) {
+<span class="fc" id="L123">        return Optional.ofNullable(this.readConfigValue(property));</span>
+    }
+
+    /**
+     * Returns the value of the configuration variable specified by &lt;code&gt;property&lt;/code&gt; casted via the
+     * &lt;code&gt;mapper&lt;/code&gt; function, or the value specified by &lt;code&gt;defaultProperty&lt;/code&gt; if &lt;code&gt;property&lt;/code&gt;
+     * isn't set.
+     *
+     * @param property        the name of the configuration variable to read.
+     * @param defaultProperty the value to be returned if &lt;code&gt;property&lt;/code&gt; is not defined.
+     * @param mapper          function used to cast the value of the configuration property to the desired type
+     *                        &lt;code&gt;T&lt;/code&gt;.
+     * @param type            class name of the destination type, only used in case ConfigurationCastException is
+     *                        thrown.
+     * @return the value of the variable casted to type &lt;code&gt;T&lt;/code&gt;, or &lt;code&gt;defaultProperty&lt;/code&gt; if the
+     * variable is not defined in the system environment
+     */
+    private &lt;T&gt; T getConfigValue(String property, T defaultProperty, Function&lt;String, T&gt; mapper, Class&lt;?&gt; type) {
+<span class="fc" id="L141">        Optional&lt;String&gt; propertyValue = this.getOptionalConfigValue(property);</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        if (propertyValue.isEmpty()) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">            if (defaultProperty == null) {</span>
+<span class="nc" id="L144">                throw new ConfigurationUndefinedException(property);</span>
+            } else {
+                // if the variable isn't set but at least there's a default value
+<span class="nc" id="L147">                return defaultProperty;</span>
+            }
+        } else {
+            // if the variable is set, try to cast it
+            try {
+<span class="fc" id="L152">                return mapper.apply(propertyValue.get());</span>
+<span class="nc" id="L153">            } catch (ClassCastException | NumberFormatException e) {</span>
+<span class="nc" id="L154">                throw new ConfigurationCastException(property, propertyValue.get(), type);</span>
+            }
+        }
+    }
+
+    /**
+     * stringToStringMapper returns an identity.
+     */
+<span class="fc" id="L162">    private static Function&lt;String, String&gt; stringToStringMapper = Function.identity();</span>
+
+    /**
+     * stringToBooleanMapper attempts to casts a String value to Boolean.
+     */
+<span class="pc" id="L167">    private static Function&lt;String, Boolean&gt; stringToBooleanMapper = (String value) -&gt; Boolean.valueOf(value);</span>
+
+    /**
+     * stringToIntegerMapper attempts to cast a String value to Integer.
+     */
+<span class="pc" id="L172">    private static Function&lt;String, Integer&gt; stringToIntegerMapper = (String value) -&gt; Integer.valueOf(value);</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>
